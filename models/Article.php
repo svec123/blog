@@ -6,6 +6,8 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\data\Pagination;
 
+
+
 /**
  * This is the model class for table "article".
  *
@@ -179,4 +181,54 @@ class Article extends \yii\db\ActiveRecord
     {
         ArticleTag::deleteAll(['article_id'=>$this->id]);
     } 
+
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date);
+      
+    }
+
+    public static function getAll($pageSize = 5)
+    {
+        
+        // $data = Article::getAll();
+        // $popular = Article::getPopular();
+        // $recent = Article::getRecent();
+        // $categories = Category::getAll();
+        
+        // return $this->render('index',[
+        //     'articles'=>$data['articles'],
+        //     'pagination'=>$data['pagination'],
+        //     'popular'=>$popular,
+        //     'recent'=>$recent,
+        //     'categories'=>$categories
+        // ]);
+            
+
+        $query = Article::find();
+
+        $count = $query->count();
+
+        $pagination = new Pagination(['totalCount'=>$count , 'pageSize'=>$pageSize]);
+
+        $articles = $query->offset($pagination->offset)
+        ->limit($pagination->limit)
+        ->all();
+
+        $data['articles'] = $articles;
+        $data['pagination'] = $pagination;
+
+        return $data;
+    }
+
+    public static function getPopular()
+    {
+        return Article::find()->orderBy('viewed desc')->limit(3)->all();
+    }
+
+    public static function getRecent()
+    {
+        return Article::find()->orderBy('date asc')->limit(4)->all();
+    }
+
 }

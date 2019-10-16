@@ -1,5 +1,6 @@
 <?php
 
+
 namespace app\controllers;
 use app\models\Article;
 use app\models\Category;
@@ -63,34 +64,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+         
+        $data =  Article::getAll(1);
 
-        // $data = Article::getAll();
-        // $popular = Article::getPopular();
-        // $recent = Article::getRecent();
-        // $categories = Category::getAll();
-        
-        // return $this->render('index',[
-        //     'articles'=>$data['articles'],
-        //     'pagination'=>$data['pagination'],
-        //     'popular'=>$popular,
-        //     'recent'=>$recent,
-        //     'categories'=>$categories
-        // ]);
-            
-
-        $query = Article::find();
-
-        $count = $query->count();
-
-        $pagination = new Pagination(['totalCount'=>$count , 'pageSize'=>1]);
-
-        $articles = $query->offset($pagination->offset)
-        ->limit($pagination->limit)
-        ->all();
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll();
+        // $popular = Article::find()->orderBy('viewed desc')->limit(3)->all();
+        // $recent = Article::find()->orderBy('date asc')->limit(4)->all();
+        // $categories = Category::find()->all();
 
         return $this->render('index',[
-            'articles'=>$articles,
-            'pagination'=>$pagination
+            'articles'=>$data['articles'],
+            'pagination'=>$data['pagination'],
+            'popular'=>$popular,
+            'recent'=>$recent ,
+            'categories' =>$categories
         ]);
     }
 
