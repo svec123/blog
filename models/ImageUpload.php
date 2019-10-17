@@ -1,13 +1,10 @@
 <?php 
 
+
 namespace app\models;
-
-
 use Yii;
-
-use yii\web\UploadedFile;
 use yii\base\Model;
-use app\models\ImageUpload;
+use yii\web\UploadedFile;
 
 class ImageUpload extends Model {
  

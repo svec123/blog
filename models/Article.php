@@ -190,19 +190,7 @@ class Article extends \yii\db\ActiveRecord
 
     public static function getAll($pageSize = 5)
     {
-        
-        // $data = Article::getAll();
-        // $popular = Article::getPopular();
-        // $recent = Article::getRecent();
-        // $categories = Category::getAll();
-        
-        // return $this->render('index',[
-        //     'articles'=>$data['articles'],
-        //     'pagination'=>$data['pagination'],
-        //     'popular'=>$popular,
-        //     'recent'=>$recent,
-        //     'categories'=>$categories
-        // ]);
+       
             
 
         $query = Article::find();

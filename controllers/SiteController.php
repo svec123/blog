@@ -105,13 +105,37 @@ class SiteController extends Controller
         ]);
     }
 
-public function actionView(){
-    return $this->render('single');
+public function actionView($id)
+{
+  $article = Article::findOne($id);
+  $popular = Article::getPopular();
+  $recent = Article::getRecent();
+  $categories = Category::getAll();
+
+
+    return $this->render('single', [
+        'article'=>$article,
+        'popular'=>$popular,
+        'recent'=>$recent ,
+        'categories' =>$categories
+    ]);
 }
 
 
-    public function actionCategory(){
-        return $this->render('category');
+    public function actionCategory($id){
+        
+        $data = Category::getArticlesByCategory($id);
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll();
+
+        return $this->render('category',[
+            'articles'=>$data['articles'],
+            'pagination'=>$data['pagination'],
+            'popular'=>$popular,
+        'recent'=>$recent ,
+        'categories' =>$categories
+        ]);
     }
 
     /**
