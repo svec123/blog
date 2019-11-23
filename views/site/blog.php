@@ -47,7 +47,7 @@ use app\models\User;
                             <div class="btn-continue-reading text-center text-uppercase">
                                 <a href="<?= Url::toRoute(['site/view','id'=>$article->id]); ?>" class="more-link">Continue Reading</a>
                                 <a href="<?= Url::toRoute(['admin/article/update','id'=>$article->id]); ?>" class=" active-botton ">Edit article</a>
-                                <a href="<?= Url::toRoute(['site/modelq','id'=>$article->id]); ?>" class=" active-botton ">doble botton</a>
+                                
                             </div>
                         </div>	
                         <div class="social-share">
