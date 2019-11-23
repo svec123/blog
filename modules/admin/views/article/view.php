@@ -11,6 +11,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+
+
+<?php foreach($articles as $article ){
+ if(yii::$app->user->identity->id == $article->user_id  || Yii::$app->user->identity->isAdmin == 1 ){
+    if( Yii::$app->request->get('id') == $article->id || Yii::$app->user->identity->isAdmin == 1) { ?>
 <div class="article-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -46,3 +51,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<?php }}} ?>

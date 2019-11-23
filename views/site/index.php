@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
 use yii\widgets\LinkPager; 
+use app\models\User; 
+use yii\helpers\Html;
 ?>
 
 <!--main content start-->
@@ -8,8 +10,15 @@ use yii\widgets\LinkPager;
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-            <?php foreach($articles as $article):?>
-                
+            <div class="sorting">
+            
+         
+            </div>
+
+
+               
+
+            <?php foreach($articles as $article):?> 
                 <article class="post">
                     <div class="post-thumb">
                         <a href="<?= Url::toRoute(['site/view','id'=>$article->id]); ?>"><img src="<?= $article->getImage(); ?>" alt=""></a>
@@ -20,7 +29,7 @@ use yii\widgets\LinkPager;
                     </div>
                     <div class="post-content">
                         <header class="entry-header text-center text-uppercase">
-                            <h6><a href="<?= Url::toRoute(['site/category','id'=>$article->category->id])?>"> <?= $article->category->title ?></a></h6>
+                            <h6><a href="<?= Url::toRoute(['site/category','id'=>$article->category->id])?>"> <?= $article->category->title ?> </a></h6>
 
                             <h1 class="entry-title"><a href="<?= Url::toRoute(['site/view','id'=>$article->id]); ?>"><?= $article->title; ?></a></h1>
 
@@ -33,9 +42,11 @@ use yii\widgets\LinkPager;
                             <div class="btn-continue-reading text-center text-uppercase">
                                 <a href="<?= Url::toRoute(['site/view','id'=>$article->id]); ?>" class="more-link">Continue Reading</a>
                             </div>
-                        </div>
+                        </div>	
                         <div class="social-share">
-                            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> <?= $article->getDate();?></span>
+                            <span class="social-share-title pull-left text-capitalize">
+                                 Author: 
+                <?php foreach($users as $user):?> <?php if($article->user_id == $user->id ) { ?>  <?= $user->name; ?>   <?php } endforeach; ?> <br>Date:  <?= $article->getDate();?> </span>
                             <ul class="text-center pull-right">
                                 <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li><?=(int) $article->viewed?>
                             </ul>
@@ -43,7 +54,6 @@ use yii\widgets\LinkPager;
                     </div>
                 </article>
                 <?php endforeach; ?>
-                
              
               <?php 
                 echo LinkPager::widget([
@@ -51,6 +61,42 @@ use yii\widgets\LinkPager;
                 ]);
               ?>
             </div>
+        
+            
+            <?= $this->render('/partials/filter',[
+               
+            ]); ?>
+
+            <!-- <div class="col-md-4">
+                <div class="primary-sidebar">
+                    
+                    <div class="filter">
+
+                       <div class=" filter-title"></div>
+
+                        <div class="filter-date col-md-8 popular-img">Date
+                        <input type="date" class="form-control" id="date" name="date" placeholder="Дата" required>
+                        </div>
+
+
+                        <div class="filter-author col-md-6 popular-img">
+                        	
+                        Author
+  <form>
+   <p><input type="search" name="Author" placeholder="Введите автора" class=> 
+   <input type="submit" value="Найти"></p>
+  </form>
+
+                        </div>
+                            
+
+                      
+
+                    </div>
+                  
+                 
+                </div>
+            </div> -->
             <?= $this->render('/partials/sidebar',[
                 'popular'=>$popular,
                 'recent'=>$recent ,

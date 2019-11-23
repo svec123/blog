@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\Category;
+use app\models\User;
 use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -35,6 +36,8 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
+
+          if( Yii::$app->user->identity->isAdmin == 1) {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -42,6 +45,12 @@ class CategoryController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
+         } else {
+        Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+            //для перестраховки вернем false
+            return false;
+    }
     }
 
     /**
@@ -52,9 +61,17 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+           $modelUser = User::findOne(Yii::$app->user->id);
+            if($model2->user_id==Yii::$app->user->id ||  $modelUser->isAdmin==1){
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            }  else {
+
+                 Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+            //для перестраховки вернем false
+            return false;
+            }   
     }
 
     /**
@@ -68,7 +85,12 @@ class CategoryController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        }
+        } else {
+
+                 Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+            //для перестраховки вернем false
+            return false;
+            }  
 
         return $this->render('create', [
             'model' => $model,

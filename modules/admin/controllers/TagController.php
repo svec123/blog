@@ -35,6 +35,8 @@ class TagController extends Controller
      */
     public function actionIndex()
     {
+
+         if( Yii::$app->user->identity->isAdmin == 1) {
         $searchModel = new TagSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -42,6 +44,12 @@ class TagController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
+        } else {
+        Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+            //для перестраховки вернем false
+            return false;
+    }
     }
 
     /**

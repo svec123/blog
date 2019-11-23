@@ -2,6 +2,7 @@
 namespace app\models;
 use Yii;
 use yii\web\IdentityInterface;
+use yii\data\Pagination;
 /**
  * This is the model class for table "user".
  *
@@ -33,6 +34,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['name', 'email', 'password', 'photo'], 'string', 'max' => 255],
         ];
     }
+
+
+    
+
     /**
      * @inheritdoc
      */
@@ -47,6 +52,27 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'photo' => 'Photo',
         ];
     }
+
+    
+    public function getAll(){
+         // build a DB query to get all articles
+         $query = User::find();
+         // get the total number of articles (but do not fetch the article data yet)
+         $count = $query->count();
+         // create a pagination object with the total count
+         $pagination = new Pagination(['totalCount' => $count, 'pageSize'=>$pageSize]);
+         // limit the query using the pagination and retrieve the articles
+         $users = $query->offset($pagination->offset)
+             ->limit($pagination->limit)
+             ->all();
+        
+         $data['users'] = $users;
+         $useda['users'] = $users;
+         $data['pagination'] = $pagination;
+         
+         return $useda;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -110,6 +136,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getImage()
     {
         return $this->photo;
+    }
+
+
+    public static function getUserId($author){
+        $authorArticles =  User::find()->where(['name'=>$author])->all();
+        return ($authorArticles['0']->id);
     }
 
  

@@ -8,6 +8,7 @@
        use app\models\Tag;
        use Yii;
        use app\models\Article;
+       use app\models\User;
        use app\models\ArticleSearch;
        use yii\helpers\ArrayHelper;
        use yii\web\Controller;
@@ -42,6 +43,8 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
+        if( Yii::$app->user->identity->isAdmin == 1) {
+            
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -49,6 +52,11 @@ class ArticleController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    } else {
+        Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+            //для перестраховки вернем false
+            return false;
+    }
     }
 
     /**
@@ -59,8 +67,22 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
+
+        $data =  Article::getAll();
+        $useda =  User::getAll();
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll();
+        $model = $this->findModel($id);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id), 
+            'users' =>$useda['users'] ,
+            'articles'=>$data['articles'],
+            'pagination'=>$data['pagination'],
+            'popular'=>$popular,
+            'recent'=>$recent ,
+            'categories' =>$categories
         ]);
     }
 
@@ -91,6 +113,13 @@ class ArticleController extends Controller
      */
     public function actionUpdate($id)
     {
+
+         
+        $data =  Article::getAll();
+        $useda =  User::getAll();
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll();
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
@@ -99,6 +128,12 @@ class ArticleController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'users' =>$useda['users'] ,
+            'articles'=>$data['articles'],
+            'pagination'=>$data['pagination'],
+            'popular'=>$popular,
+            'recent'=>$recent ,
+            'categories' =>$categories
         ]);
     }
 

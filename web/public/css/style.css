@@ -1,3 +1,5 @@
+
+
 /*------------------------------------------------------------------
 Common Stylesheet
 
@@ -35,16 +37,24 @@ Table of contents
 24. header page
 
 -------------------------------------------------------------------*/
+
+
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,600);
 @import url(https://fonts.googleapis.com/css?family=Merriweather:400,700,400italic);
 
 /*--------------------------------------
     elements
 --------------------------------------*/
+
+
 body {
     font-family: 'Open Sans', sans-serif;
     background: #F4F4F4;
 }
+
+
+
 
 span, p, input {
     font-family: 'Merriweather', serif;
@@ -1638,4 +1648,35 @@ p.go-back-home a:hover {
     background: #00BFF3;
     color: #fff;
     border-color: #00BFF3;
+}
+
+.filter{
+    background:#fff ;
+    padding: 10px 0 0px 0 ;
+    display: block-inline;
+    
+    height: 170px;
+    margin-bottom: 20px; 
+}
+
+
+.active-botton{
+    font-size: 12px;
+    letter-spacing: 1px;
+    overflow: hidden;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin: 24px 0 28px;
+    display: inline-block; 
+    color: #c231eb;
+    border: 1px solid #eee;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s; 
+    
+}
+
+.active-botton:hover{
+    background: #c231eb;
+    color: #fff; 
+    text-decoration: none;
 }

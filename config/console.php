@@ -14,10 +14,13 @@ $config = [
         '@tests' => '@app/tests',
     ],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager' , // or user 'yii\rbac\DbManager'
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'log' => [
+        'log' => [ 
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
@@ -27,6 +30,8 @@ $config = [
         ],
         'db' => $db,
     ],
+ 
+
     'params' => $params,
     /*
     'controllerMap' => [

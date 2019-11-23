@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'BLOG',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -38,22 +38,11 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'home', 'url' => ['/admin/default/index']],
-            ['label' => 'article', 'url' => ['/admin/article/index']],
-            ['label' => 'category', 'url' => ['/admin/category/index']],
-            ['label' => 'tag', 'url' => ['/admin/tag/index/']],
-            // Yii::$app->user->isGuest ? (
-            //     ['label' => 'Login', 'url' => ['/site/login']]
-            // ) : (
-            //     '<li>'
-            //     . Html::beginForm(['/site/logout'], 'post')
-            //     . Html::submitButton(
-            //         'Logout (' . Yii::$app->user->identity->username . ')',
-            //         ['class' => 'btn btn-link logout']
-            //     )
-            //     . Html::endForm()
-            //     . '</li>'
-            // )
+      //      ['label' => 'Home', 'url' => ['/admin/default/index']],
+            ['label' => 'Articles', 'url' => ['/site/blog']],
+            ['label' => 'Commentaries', 'url' => ['/admin/comment/index']],
+            ['label' => 'Categories', 'url' => ['/admin/category/index']],
+            ['label' => 'Tag', 'url' => ['/admin/tag/index']]
         ],
     ]);
     NavBar::end();
@@ -77,6 +66,14 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<?php $this->registerJsFile('/ckeditor/ckeditor.js'); ?>
+<?php $this->registerJsFile('/ckfinder/ckfinder.js'); ?>
+<script>
+$(document).ready(function(){
+    var editor = CKEDITOR.replaceAll();
+    CKFinder.setupCKEditor( editor );
+})
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

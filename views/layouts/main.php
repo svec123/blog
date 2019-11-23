@@ -47,6 +47,9 @@ PublicAsset::register($this);
                 <ul class="nav navbar-nav text-uppercase">
                     <li><a data-toggle="dropdown" class="dropdown-toggle" href="/">Home</a>
 
+                         <?php if(!Yii::$app->user->isGuest):?>
+                <li><a data-toggle="dropdown" class="dropdown-toggle" href="/site/blog">Aricle</a>
+                      <?php endif;?>
                     </li>
                 </ul>
                 <div class="i_con">
@@ -55,6 +58,7 @@ PublicAsset::register($this);
                     <?php if(Yii::$app->user->isGuest):?>
                             <li><a href="<?= Url::toRoute(['auth/login'])?>">Login</a></li>
                             <li><a href="<?= Url::toRoute(['auth/signup'])?>">Register</a></li>
+                              
                         <?php else: ?>
                             <?= Html::beginForm(['/auth/logout'], 'post')
                             . Html::submitButton(

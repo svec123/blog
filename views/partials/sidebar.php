@@ -4,9 +4,9 @@ use yii\helpers\Url;
 ?>
 
 
-<div class="col-md-4" data-sticky_column>
+<div class="col-md-4 pull-right"  data-sticky_column >
                 <div class="primary-sidebar">
-                    
+                 
                     <aside class="widget">
                         <h3 class="widget-title text-uppercase text-center">Popular Posts</h3>
 
